@@ -19,22 +19,23 @@ const getAll = async ()=>{
         json = await res.json();
         if(!res.ok) throw {status:res.status, statusText: res.statusText};
 
+        console.log(json)
         json.forEach( element =>  {
             description.classList.remove(`desc${element.id-1}`);
             $send.classList.remove(`c${element.id-1}`)
            $template.querySelector(".card-header").innerHTML = `<h5 class="name">${element.name}</h5>`;
            $template.querySelector(".card-header").innerHTML += `<button  type="button" class="btnDelList btn btn-danger btn-circle " dataset.id=${element.id}>Eliminar</i></button>`;
-        
+           console.log(element.tasks)
             element.tasks.forEach(elementTask =>{
-                
-            if(elementTask.complete){
+            console.log("id ",elementTask.id)
+            if(!complete){
             ids += `<p id=idt${elementTask.id} dataset.id='idt${elementTask.id}' style="text-decoration: line-through;">${elementTask.id}</p>`;
             tasks += `<p id='dst${elementTask.id}' dataset.id='dst${elementTask.id}' style="text-decoration: line-through;">${elementTask.description}</p>`;
             }else{
                 ids += `<p id=idt${elementTask.id} dataset.id='idt${elementTask.id}' >${elementTask.id}</p>`;
             tasks += `<p id='dst${elementTask.id}' dataset.id='dst${elementTask.id}'>${elementTask.description}</p>`;
             }
-            if(!elementTask.complete){
+            if(complete){
                 complete += `<label class="btn btn-secondary btn-complete " id='com${elementTask.id}' dataset.id=${elementTask.id}>
                 <input type="checkbox" checked autocomplete="off" > Completar
                 </label>`;
@@ -80,7 +81,7 @@ const btdAdd = d.querySelector(".btdAdd");
 const ListName = d.querySelector(".nameList");
 btdAdd.addEventListener("click", async (e)=>{
     e.preventDefault();
-    
+    console.log("dadsd ",ListName.value)
     try {
        
         let options = {
@@ -94,6 +95,7 @@ btdAdd.addEventListener("click", async (e)=>{
             })
         }, res = await fetch("http://localhost:8080/list",options),
             json = await res.json();
+            console.log(res)
             if(!res.ok) throw {status:res.status, statusText: res.statusText};
 
             location.reload();
@@ -105,8 +107,10 @@ btdAdd.addEventListener("click", async (e)=>{
 
 const btnSendTask = d.querySelector(".btnSendTask");
 btnSendTask.addEventListener("click", async (e)=>{
+    alert("dasdsa")
     e.preventDefault();
     const descriptionCurrent = d.getElementById(`${e.target.getAttribute("dataset.idList")}`);
+    console.log("dadsd ",descriptionCurrent)
     try {
        
         let options = {
@@ -121,6 +125,7 @@ btnSendTask.addEventListener("click", async (e)=>{
             })
         }, res = await fetch(`http://localhost:8080/task/update/${e.target.getAttribute("dataset.idList")}`,options),
             json = await res.json();
+            console.log(res)
             if(!res.ok) throw {status:res.status, statusText: res.statusText};
 
             location.reload();
@@ -134,6 +139,7 @@ btnSendTask.addEventListener("click", async (e)=>{
 
 let update = async (data)=>{
     try {
+       
         let options = {
             method : "PUT",
             headers : {
@@ -146,6 +152,7 @@ let update = async (data)=>{
             })
         }, res = await fetch(`http://localhost:8080/task/update/${data.id}`,options),
             json = await res.json();
+            console.log("result ",json.id,"complete ",!data.complete)
             if(!res.ok) throw {status:res.status, statusText: res.statusText};
 
            // location.reload();
@@ -158,6 +165,7 @@ let update = async (data)=>{
 
 d.addEventListener("click",async e=>{
     e.preventDefault();
+    console.log(e.target.dataset.id || e.target.getAttribute("dataset.idList"))
 
     
     let s = e.target;
@@ -210,6 +218,8 @@ d.addEventListener("click",async e=>{
         const $send = d.querySelector(".btnSendTask ");
         if($send.textContent=="Enviar"){
             const descriptionCurrent = d.getElementById(`${e.target.dataset.id}`);
+                console.log("1 ",descriptionCurrent.value)
+                console.log("2 ",e.target.dataset.id)
                 try {
                
                     let options = {
@@ -224,6 +234,7 @@ d.addEventListener("click",async e=>{
                         })
                     }, res = await fetch("http://localhost:8080/task",options),
                         json = await res.json();
+                        console.log(res)
                         if(!res.ok) throw {status:res.status, statusText: res.statusText};
             
                         location.reload();
@@ -234,6 +245,7 @@ d.addEventListener("click",async e=>{
             
         }else{
             const descriptionCurrent = d.getElementById(`${e.target.dataset.id}`);
+            console.log("dadsd ",descriptionCurrent.value)
             try {
                
                 let options = {
@@ -248,6 +260,7 @@ d.addEventListener("click",async e=>{
                     })
                 }, res = await fetch(`http://localhost:8080/task/update/${$form.id.value}`,options),
                     json = await res.json();
+                    console.log(res)
                     if(!res.ok) throw {status:res.status, statusText: res.statusText};
         
                     location.reload();
@@ -262,16 +275,26 @@ d.addEventListener("click",async e=>{
     
     if(s.matches(".edit")){
         const descriptionCurrent = d.getElementById(`${e.target.getAttribute("dataset.idList")}`);
+        console.log(`c${e.target.getAttribute("dataset.idList")}`)
         const $sende =d.getElementById(`c${e.target.getAttribute("dataset.idList")}`);
+        console.log("s ",$sende)
         $sende.textContent = "Editar"
         descriptionCurrent.value = e.target.getAttribute("dataset.description")
         $form.id.value =e.target.getAttribute("dataset.id")
     }
 
     if(s.matches(".btn-complete")){
+        console.log(`idt${e.target.getAttribute("dataset.id")}`);
+        console.log(`dst${e.target.getAttribute("dataset.id")}`);
+        console.log(e.target.getAttribute("dataset.id"))
         const id = d.getElementById(`idt${e.target.getAttribute("dataset.id")}`)
         const desc = d.getElementById(`dst${e.target.getAttribute("dataset.id")}`)
+        console.log(e.target.getAttribute("dataset.id"))
+        console.log("idddd ",id);
+        console.log("descccc ",desc);
         const complete = d.getElementById(`com${e.target.getAttribute("dataset.id")}`)
+        console.log(`com${e.target.getAttribute("dataset.id")}`)
+        console.log(complete)
         complete.classList.add("active")
         complete.textContent = "Completado"
 
@@ -284,20 +307,22 @@ d.addEventListener("click",async e=>{
                 }
             }, res = await fetch(`http://localhost:8080/task/${e.target.getAttribute("dataset.id")}`,options),
                 json = await res.json();
+                console.log(json)
                 if(json.complete){
                     complete.classList.remove("active")
                     complete.textContent = "Completar"
-                    id.style.textDecoration="";
-                    desc.style.textDecoration="";
+                    id.style.textDecoration.remove="line-through"
+                    dst.style.textDecoration.remove="line-through"
                     update(json);
                 }else{
+                    console.log("elseeeeeeeeee")
                     complete.classList.add("active")
                     complete.textContent = "Completado"
                     id.style.textDecoration="line-through"
-                    desc.style.textDecoration="line-through"
+                    dst.style.textDecoration="line-through"
                     update(json);
                 }
-                
+                console.log("idact ",json.id)
                 if(!res.ok) throw {status:res.status, statusText: res.statusText};
     
                 location.reload();

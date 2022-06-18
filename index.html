@@ -13,16 +13,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js" integrity="sha512-JnjG+Wt53GspUQXQhc+c4j8SBERsgJAoHeehagKHlxQN+MtCCmFDghX9/AcbkkNRZptyZU4zC8utK59M5L45Iw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
-<body>
+<body style="text-align: center; background-color: #c6e1e2;">
   
   <h1 class="text-center">Lista de Tareas</h1>
   <div id="container" style="display:inline-block;text-align:center;">
-    <input type="text " name="nameList" class="nameList form-control" placeholder="Ingrese el nombre de la lista" required>
+    <input type="text" name="nameList" class="nameList" placeholder="Ingrese el nombre de la lista" required>
     <button type="button" class="btn btn-warning btdAdd">Agregar</button>
     <input type="hidden" name="id">
     <br>
     
     <br>
+
+  <form class="crud-form form-row">
+                
+    <div class="col">
+      
+    </div>
+    <br>
+    <br>
+    <input type="hidden" class="btnSendTask ">
+    <input type="hidden" name="id">
+  </form>
 </div>
   <template id="crud-template">
     
@@ -77,7 +88,6 @@
 
   <script src="js/struct.js"></script>
   <script  src="js/main.js"></script>
-  <script  src="js/deleteList.js" ></script>
 </body>
 
 </html>
