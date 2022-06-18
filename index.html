@@ -23,11 +23,19 @@
     <br>
     
     <br>
-  </div>
 
+  <form class="crud-form form-row">
+                
+    <div class="col">
+      <input type="text"  class="description form-control "  placeholder="Ingrese la descripción de la tarea" required="" class="form-control">
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btnSendTask btn btn-success">Enviar</button>
+    <input type="hidden" name="id">
+  </form>
+</div>
   <template id="crud-template">
-    
-    <button class="prueba" id="prueba">hola</button>
     
     <div class="card border-primary mb-3" style="width: 48rem;">
       <div class="card-header">
@@ -43,12 +51,9 @@
               <form class="crud-form form-row">
                 
               <div class="col">
-                <input type="text"  class="form-control description" name="name" placeholder="Ingrese la descripción de la tarea" required="" class="form-control">
+                <input type="text"  class="description form-control "  placeholder="Ingrese la descripción de la tarea" required="" >
               </div>
               <br>
-              <!--<div class="col">
-                <input type="text" name="constelacion" placeholder="Constelación" required="" class="form-control">
-              </div>-->
               <br>
               <button type="submit" class="btnSendTask btn btn-success">Enviar</button>
               <input type="hidden" name="id">
@@ -63,7 +68,7 @@
               </div>
               <div class="col-2">
                 <h6>Completado</h6>
-                <div class="btn-group-toggle complete" data-toggle="buttons">
+                <div class="btn-group-toggle complete" >
                   
                 </div>
               </div>

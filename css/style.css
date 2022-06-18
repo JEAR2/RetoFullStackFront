@@ -1,9 +1,25 @@
 .btn-circle {
-    width: 30px;
+    width: 50px;
     height: 30px;
     padding: 6px 0px;
     border-radius: 15px;
     text-align: center;
     font-size: 12px;
     line-height: 1.42857;
+}
+
+.card-header{
+    font-size: 22px;
+}
+
+.btnDelList{
+    float: right;
+}
+
+.name{
+    float: left;
+}
+
+.container{
+    align-items: center;
 }
